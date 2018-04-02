@@ -8,17 +8,19 @@ Created on Fri Mar 30 18:03:57 2018
 
 import numpy as np
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import confusion_matrix, accuracy_score, roc_auc_score
+from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.svm import SVC
-import sklearn
 import load_data
 from JDA.JDA import JDA
+import jdot
 import da_tool.tca
 import create_domain
 
 
 # load data
-data, label = load_data.load_whole_brain()
+#data, label = load_data.load_whole_brain()
+data, label = load_data.load_ica()
+
 
 # create target and source domain data
 src_pos = 21
@@ -39,10 +41,14 @@ skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=600)
 my_tca = da_tool.tca.TCA(dim=100, kerneltype='linear')
 src_tca, tar_tca, tar_o_tca, V, obj, obj_tca = my_tca.fit_transform(Xs, Xt)
 # jda
+'''
 options = {"k": 100, "lmbda": 800, "ker": 'linear', "gamma": 1.0}
 Z, A = JDA(Xs.T, Xt.T, ys, yt, options)
 Zs = Z[:, :ns].T
 Zt = Z[:, ns:].T
+
+'''
+
 
 # init clf
 svm = SVC(kernel='linear')
@@ -57,22 +63,20 @@ pred2 = np.zeros(len(yt))
 for train, test in skf.split(tar_tca,yt):
     y_train = np.hstack((ys,yt[train]))
     tca_train = np.vstack((src_tca,tar_tca[train]))
-    Z_train = np.vstack((Zs,Zt[train]))
+    #Z_train = np.vstack((Zs,Zt[train]))
     
     svm.fit(tca_train, y_train)
     pred1[test] = svm.predict(tar_tca[test])
     dec1[test] = svm.decision_function(tar_tca[test])
     
     # jda
-    options = {"k": 100, "lmbda": 800, "ker": 'linear', "gamma": 1.0}
-    Z, A = JDA(Xs.T, Xt[train].T, ys, yt[train], options)
+    options = {"k": 100, "lmbda": 100, "ker": 'linear', "gamma": 1.0}
+    Z, A, phi = JDA(Xs.T, Xt[train].T, ys, yt[train], options)
     Zs = Z[:, :ns].T
     Zt = Z[:, ns:].T
     
-    Xtt = Xt[test].T
-    Zt_test = np.matmul(Xtt.T, Xtt)
-    Zt_test = np.matmul(A.T, Zt_test)
-    Zt_test = Zt_test.T
+    Zt_test = np.matmul(Xt[test],phi)
+    
     
     svm.fit(Zt, yt[train])
     pred2[test] = svm.predict(Zt_test)
