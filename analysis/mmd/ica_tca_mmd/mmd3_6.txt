@@ -1,0 +1,108 @@
+target domain: 3 and 6, source domain: 1 and 2
+MMD before applying TCA: 0.293399284533
+MMD after applying TCA: 0.838289744681
+target domain: 3 and 6, source domain: 1 and 4
+MMD before applying TCA: 0.179328841379
+MMD after applying TCA: 0.287539151694
+target domain: 3 and 6, source domain: 1 and 5
+MMD before applying TCA: 0.20744782635
+MMD after applying TCA: 0.384127811395
+target domain: 3 and 6, source domain: 1 and 8
+MMD before applying TCA: 0.117964214277
+MMD after applying TCA: 0.115915331188
+target domain: 3 and 6, source domain: 1 and 9
+MMD before applying TCA: 0.107116687107
+MMD after applying TCA: 0.0947824237021
+target domain: 3 and 6, source domain: 1 and 10
+MMD before applying TCA: 0.141791800112
+MMD after applying TCA: 0.177969563051
+target domain: 3 and 6, source domain: 1 and 21
+MMD before applying TCA: 0.0853149558297
+MMD after applying TCA: 0.0662041125691
+target domain: 3 and 6, source domain: 1 and 22
+MMD before applying TCA: 0.0958016292345
+MMD after applying TCA: 0.0830089501578
+target domain: 3 and 6, source domain: 2 and 4
+MMD before applying TCA: 0.37408264872
+MMD after applying TCA: 1.18032591821
+target domain: 3 and 6, source domain: 2 and 5
+MMD before applying TCA: 0.485987522868
+MMD after applying TCA: 1.59188072971
+target domain: 3 and 6, source domain: 2 and 8
+MMD before applying TCA: 0.277480095427
+MMD after applying TCA: 0.769433849024
+target domain: 3 and 6, source domain: 2 and 9
+MMD before applying TCA: 0.271237059844
+MMD after applying TCA: 0.750746307888
+target domain: 3 and 6, source domain: 2 and 10
+MMD before applying TCA: 0.303956307302
+MMD after applying TCA: 0.836145969754
+target domain: 3 and 6, source domain: 2 and 21
+MMD before applying TCA: 0.239245322201
+MMD after applying TCA: 0.674817284576
+target domain: 3 and 6, source domain: 2 and 22
+MMD before applying TCA: 0.23699174364
+MMD after applying TCA: 0.670648657106
+target domain: 3 and 6, source domain: 4 and 5
+MMD before applying TCA: 0.327611834409
+MMD after applying TCA: 0.761793489554
+target domain: 3 and 6, source domain: 4 and 8
+MMD before applying TCA: 0.187787552552
+MMD after applying TCA: 0.30839810082
+target domain: 3 and 6, source domain: 4 and 9
+MMD before applying TCA: 0.17671562623
+MMD after applying TCA: 0.278798783318
+target domain: 3 and 6, source domain: 4 and 10
+MMD before applying TCA: 0.214250753873
+MMD after applying TCA: 0.381049475711
+target domain: 3 and 6, source domain: 4 and 21
+MMD before applying TCA: 0.139198030753
+MMD after applying TCA: 0.212053363367
+target domain: 3 and 6, source domain: 4 and 22
+MMD before applying TCA: 0.150314905201
+MMD after applying TCA: 0.237010232035
+target domain: 3 and 6, source domain: 5 and 8
+MMD before applying TCA: 0.219988724092
+MMD after applying TCA: 0.404753477228
+target domain: 3 and 6, source domain: 5 and 9
+MMD before applying TCA: 0.208228673032
+MMD after applying TCA: 0.372073927315
+target domain: 3 and 6, source domain: 5 and 10
+MMD before applying TCA: 0.268135705898
+MMD after applying TCA: 0.546130276561
+target domain: 3 and 6, source domain: 5 and 21
+MMD before applying TCA: 0.148160882807
+MMD after applying TCA: 0.25628552455
+target domain: 3 and 6, source domain: 5 and 22
+MMD before applying TCA: 0.158262867809
+MMD after applying TCA: 0.282523829808
+target domain: 3 and 6, source domain: 8 and 9
+MMD before applying TCA: 0.143264242654
+MMD after applying TCA: 0.167395238374
+target domain: 3 and 6, source domain: 8 and 10
+MMD before applying TCA: 0.172908974496
+MMD after applying TCA: 0.253294265901
+target domain: 3 and 6, source domain: 8 and 21
+MMD before applying TCA: 0.0938403749045
+MMD after applying TCA: 0.0832472060139
+target domain: 3 and 6, source domain: 8 and 22
+MMD before applying TCA: 0.107517936321
+MMD after applying TCA: 0.104749055272
+target domain: 3 and 6, source domain: 9 and 10
+MMD before applying TCA: 0.172629220934
+MMD after applying TCA: 0.25450256431
+target domain: 3 and 6, source domain: 9 and 21
+MMD before applying TCA: 0.0883195164613
+MMD after applying TCA: 0.0708147581436
+target domain: 3 and 6, source domain: 9 and 22
+MMD before applying TCA: 0.0970955166566
+MMD after applying TCA: 0.0848689316414
+target domain: 3 and 6, source domain: 10 and 21
+MMD before applying TCA: 0.116010413671
+MMD after applying TCA: 0.138085424856
+target domain: 3 and 6, source domain: 10 and 22
+MMD before applying TCA: 0.122208986452
+MMD after applying TCA: 0.147835720949
+target domain: 3 and 6, source domain: 21 and 22
+MMD before applying TCA: 0.083362410778
+MMD after applying TCA: 0.065366175339

@@ -1,0 +1,108 @@
+target domain: 3 and 6, source domain: 1 and 2
+MMD before applying TCA: 36620.5441069
+MMD after applying TCA: 4.76837158203e-07
+target domain: 3 and 6, source domain: 1 and 4
+MMD before applying TCA: 14475.4540376
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 1 and 5
+MMD before applying TCA: 21595.209802
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 1 and 8
+MMD before applying TCA: 8378.84352571
+MMD after applying TCA: -2.38418579102e-07
+target domain: 3 and 6, source domain: 1 and 9
+MMD before applying TCA: 6397.17667841
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 1 and 10
+MMD before applying TCA: 9904.01197572
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 1 and 21
+MMD before applying TCA: 5045.36036189
+MMD after applying TCA: -2.38418579102e-07
+target domain: 3 and 6, source domain: 1 and 22
+MMD before applying TCA: 5352.08509405
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 2 and 4
+MMD before applying TCA: 58162.5447299
+MMD after applying TCA: 4.76837158203e-07
+target domain: 3 and 6, source domain: 2 and 5
+MMD before applying TCA: 100100.10361
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 2 and 8
+MMD before applying TCA: 33199.9773699
+MMD after applying TCA: -1.43051147461e-06
+target domain: 3 and 6, source domain: 2 and 9
+MMD before applying TCA: 31485.8469262
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 2 and 10
+MMD before applying TCA: 39022.7859368
+MMD after applying TCA: -9.53674316406e-07
+target domain: 3 and 6, source domain: 2 and 21
+MMD before applying TCA: 25256.9230693
+MMD after applying TCA: 4.76837158203e-07
+target domain: 3 and 6, source domain: 2 and 22
+MMD before applying TCA: 24343.7642724
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 4 and 5
+MMD before applying TCA: 47015.3407513
+MMD after applying TCA: 1.43051147461e-06
+target domain: 3 and 6, source domain: 4 and 8
+MMD before applying TCA: 16207.852393
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 4 and 9
+MMD before applying TCA: 13976.2322314
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 4 and 10
+MMD before applying TCA: 19802.4313061
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 4 and 21
+MMD before applying TCA: 9626.09463631
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 4 and 22
+MMD before applying TCA: 10571.5560699
+MMD after applying TCA: 4.76837158203e-07
+target domain: 3 and 6, source domain: 5 and 8
+MMD before applying TCA: 22857.621162
+MMD after applying TCA: -1.43051147461e-06
+target domain: 3 and 6, source domain: 5 and 9
+MMD before applying TCA: 20860.0947379
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 5 and 10
+MMD before applying TCA: 31974.5174025
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 5 and 21
+MMD before applying TCA: 12333.8903394
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 5 and 22
+MMD before applying TCA: 13058.0709067
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 8 and 9
+MMD before applying TCA: 10580.7889485
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 8 and 10
+MMD before applying TCA: 14474.1017141
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 8 and 21
+MMD before applying TCA: 6337.13764661
+MMD after applying TCA: -3.57627868652e-07
+target domain: 3 and 6, source domain: 8 and 22
+MMD before applying TCA: 6733.73188629
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 9 and 10
+MMD before applying TCA: 13815.7626351
+MMD after applying TCA: -1.90734863281e-06
+target domain: 3 and 6, source domain: 9 and 21
+MMD before applying TCA: 5051.1857656
+MMD after applying TCA: -1.90734863281e-06
+target domain: 3 and 6, source domain: 9 and 22
+MMD before applying TCA: 5332.21551033
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 10 and 21
+MMD before applying TCA: 7419.43093609
+MMD after applying TCA: -4.76837158203e-07
+target domain: 3 and 6, source domain: 10 and 22
+MMD before applying TCA: 7607.30118229
+MMD after applying TCA: 0.0
+target domain: 3 and 6, source domain: 21 and 22
+MMD before applying TCA: 4502.91174946
+MMD after applying TCA: -7.15255737305e-07
