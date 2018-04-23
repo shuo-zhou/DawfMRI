@@ -95,11 +95,11 @@ for i in clf_list:
 acc_m = {}
 acc_m['cdsvm'] = {}
 for i in clf_list:
-    print(i)
-    print(i, file=f)
+#    print(i)
+#    print(i, file=f)
     for src in src_dict[i]:
-        print(src)
-        print(src, file=f)
+#        print(src)
+#        print(src, file=f)
         sen_list = []
         spe_list = []
         acc_list = []
@@ -114,9 +114,9 @@ for i in clf_list:
             if rev(src):
                 pred = - pred           
             cm = confusion_matrix(dec_da[i]['true_label'],pred)
-            print(cm, file=f)
+#            print(cm, file=f)
             sen, spe, acc = sen_spe(cm)
-            print(sen,spe,acc,file=f)
+#            print(sen,spe,acc,file=f)
             #tpr, fpr, thr = roc_curve(dec_dict[i]['true_label'],np.sign(dec_dict[i][src][j,:]))
             sen_list.append(sen)
             spe_list.append(spe)
@@ -136,7 +136,7 @@ dec_non_da['ivasvm'] = dec_icasvm_df.as_matrix()
 
 for i in dec_non_da:
     print(i)
-    print(i, file=f)
+#    print(i, file=f)
     y_true = dec_non_da[i][0,:]
     sen_list = []
     spe_list = []
@@ -145,8 +145,8 @@ for i in dec_non_da:
         pred = np.sign(dec_non_da[i][j,:])
         cm = confusion_matrix(y_true,pred)
         sen, spe, acc = sen_spe(cm)
-        print(cm, file=f)
-        print(sen,spe,acc,file=f)
+#        print(cm, file=f)
+#        print(sen,spe,acc,file=f)
         sen_list.append(sen)
         spe_list.append(spe)
         acc_list.append(acc)
