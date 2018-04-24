@@ -1,0 +1,108 @@
+balloon analogue risk task
+========
+risk
+punishment processing
+loss anticipation
+reward anticipation
+risk seeking
+risk aversion
+feedback processing
+response execution
+pumps average
+response selection
+pumps average
+visual object detection
+task difficulty
+
+Probabilistic classification task
+=========
+negative feedback processing
+positive feedback processing
+reinforcement learning
+error detection
+visual word recognition
+categorization
+response execution
+response selection
+visual form recognition
+
+deterministic classification
+=========
+categorization
+response selection
+visual word recognition
+error detection
+response execution
+reinforcement learning
+visual form recognition
+
+Mixed event related probe
+==========
+
+rhyme verification task
+==========
+phonological working memory
+visual pseudoword recognition
+phonological assembly
+lexical retrieval
+phonological comparison
+visual word recognition
+
+
+mixed gambles task
+==========
+numerical scale judgment
+confidence judgment
+risk processing
+economic value processing
+response execution
+response selection
+visual number recognition
+decision certainty
+potential monetary loss
+potential monetary reward
+
+stop signal task with letter naming
+==========
+visual letter recognition
+response selection
+vocal response execution
+proactive control
+response inhibition
+
+stop signal task with pseudo word naming
+==========
+response selection
+vocal response execution
+proactive control
+visual pseudoword recognition
+response inhibition
+
+stop signal task
+==========
+error detection
+auditory tone detection
+oddball detection
+proactive control
+response selection
+response execution
+visual form recognition
+response inhibition
+
+Simon task
+==========
+response selection
+response execution
+visual color discrimination
+response conflict
+error detection
+
+Eriksen flanker task
+==========
+spatial selective attention
+response execution
+response selection
+visual form recognition
+error detection
+resistance to distractor inference
+response conflict
