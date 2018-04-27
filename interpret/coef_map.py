@@ -84,3 +84,6 @@ coef_img = nib.Nifti1Image(coef_brain, maskimg.get_affine())
 nib.save(coef_img, 'coef_img.nii.gz')
 
 plotting.plot_glass_brain('coef_img.nii.gz')
+
+plotting.plot_stat_map('coef_img.nii.gz', display_mode='x', threshold=0.0002,
+                       cut_coords=range(0, 51, 10), title='Slices')

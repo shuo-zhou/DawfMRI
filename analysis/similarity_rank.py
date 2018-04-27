@@ -27,7 +27,30 @@ def pair_to_str(pair_list):
         str_list.append(str(p[0])+','+str(p[1]))
     return str_list
 
+<<<<<<< HEAD
 def metric(task_vec1, task_vec2, task_vec3, task_vec4):
+=======
+def metric(task_vec1, task_vec2, task_vec3, task_vec4, lmbda = 0.3):
+#    clf_task1 = task_vec1-task_vec2 + np.multiply(task_vec1, task_vec2)*2
+#    clf_task2 = task_vec3-task_vec4 + np.multiply(task_vec3, task_vec4)*2
+#    sim1 = cosine_similarity(task_vec1, task_vec3)
+#    sim2 = cosine_similarity(task_vec2, task_vec4)
+    
+#    sim_diff = cosine_similarity((task_vec1 - task_vec2), (task_vec3 - task_vec4))
+#    sim_sum = cosine_similarity((task_vec1 + task_vec2), (task_vec3 + task_vec4))
+#    return  sim_diff[0,0] + sim_sum[0,0] * lmbda
+#    #return sim_sum[0,0]
+    
+#    clf_task1 = task_vec1-task_vec2
+#    clf_task2 = task_vec3-task_vec4
+#    clf_task1[np.where(overlap1==2)] = 2
+#    clf_task2[np.where(overlap2==2)] = 2
+#    #sim_diff = cosine_similarity(clf_task1, clf_task2)
+#    #sim_sum = cosine_similarity((task_vec1 + task_vec2), (task_vec3 + task_vec4))
+#    return cosine_similarity(clf_task1, clf_task2)[0,0]#np.correlate(clf_task1[0], clf_task2[0])# sim_diff[0,0]# + sim_sum[0,0] * lmbda
+#    #return sim_sum[0,0]
+#    return sim1[0,0] + sim2[0,0]
+>>>>>>> master
     tar_vec = np.hstack((task_vec1, task_vec2))
     src_vec = np.hstack((task_vec3, task_vec4))
 
