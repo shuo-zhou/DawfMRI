@@ -27,10 +27,9 @@ def pair_to_str(pair_list):
         str_list.append(str(p[0])+','+str(p[1]))
     return str_list
 
-<<<<<<< HEAD
+
 def metric(task_vec1, task_vec2, task_vec3, task_vec4):
-=======
-def metric(task_vec1, task_vec2, task_vec3, task_vec4, lmbda = 0.3):
+
 #    clf_task1 = task_vec1-task_vec2 + np.multiply(task_vec1, task_vec2)*2
 #    clf_task2 = task_vec3-task_vec4 + np.multiply(task_vec3, task_vec4)*2
 #    sim1 = cosine_similarity(task_vec1, task_vec3)
@@ -50,9 +49,9 @@ def metric(task_vec1, task_vec2, task_vec3, task_vec4, lmbda = 0.3):
 #    return cosine_similarity(clf_task1, clf_task2)[0,0]#np.correlate(clf_task1[0], clf_task2[0])# sim_diff[0,0]# + sim_sum[0,0] * lmbda
 #    #return sim_sum[0,0]
 #    return sim1[0,0] + sim2[0,0]
->>>>>>> master
-    tar_vec = np.hstack((task_vec1, task_vec2))
-    src_vec = np.hstack((task_vec3, task_vec4))
+
+    tar_vec = task_vec1-task_vec2 #+ np.multiply(task_vec1, task_vec2)*0.5
+    src_vec = task_vec3-task_vec4 #+ np.multiply(task_vec3, task_vec4)*0.5
 
     return cosine_similarity(tar_vec, src_vec)[0,0]
 
@@ -74,13 +73,13 @@ def pair_switch(pair_list):
     return swithed_pairs
 
 
-sim_df = pd.read_csv('task_similarity.csv', header=0, index_col=0)
+#sim_df = pd.read_csv('task_similarity.csv', header=0, index_col=0)
 
 res_df = pd.read_csv('10fold_adapmat_full.csv', header=0, index_col=0)
 
 targets = [[1, 22], [3, 6], [6, 22]]
 
-task_vecs, id_ar, func_list = task2vec()
+task_vecs, id_ar, func_list = task2vec(task_file='Brain_func-task.csv')
 
 for tar in targets:
     src_pairs = get_src_pairs(tar)
