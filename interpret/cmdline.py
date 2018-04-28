@@ -87,6 +87,6 @@ class commandline:
             
     def printHelp(self):
         helpinfo = __doc__.replace('<PROGRAM>',sys.argv[0],1)
-        print helpinfo
-        print sys.stderr
+        print (helpinfo)
+        print (sys.stderr)
         sys.exit()

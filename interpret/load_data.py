@@ -37,3 +37,17 @@ def load_ica(dim = 100, data_path = ICA_PATH, label_path = LABEL_PATH):
     labels = np.loadtxt(os.path.join(label_path,'data_key_all.txt'))[:,0]
     return data, labels
     
+def get_domain_data(domain, data, label):
+    n = len(label)
+    data_ = []
+    label_ = []
+    for i in range(n):
+        if label[i] == domain[0]:
+            data_.append(data[i,:])
+            label_.append(1)
+        elif label[i] == domain[1]:
+            data_.append(data[i,:])
+            label_.append(-1)
+    data_ = np.asarray(data_)
+    label_ = np.asarray(label_)
+    return data_, label_
