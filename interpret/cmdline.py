@@ -42,7 +42,7 @@ class commandline:
             self.wb_dir = opts['-w']
             if self.wb_dir[-1]!='/':
                 self.wb_dir+='/';
-            if not os.path.exists(self.wd_ir):
+            if not os.path.exists(self.wd_dir):
                 print ('directory for whole brain data %s does not exist!'
                        %self.wb_dir)
                 self.printHelp()
