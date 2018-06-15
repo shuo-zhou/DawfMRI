@@ -29,49 +29,44 @@ class CDSVM(object):
         X = X.reshape((n_samples,n_features))
         y = y.reshape((n_samples,1))
         self.support_vector_labels = self.support_vector_labels.reshape((n_support,1))
-        shift_w = 0
+       
         
-        
-        #create matrix Q
+        #create matrix P
         paramCount = n_support + n_samples + n_features
-        Q = np.zeros((paramCount,paramCount))
-        for row in range(n_features):
-            Q[shift_w+row,shift_w+row] = 1
+        P = np.zeros((paramCount,paramCount))
+        P[:n_features, :n_features] = np.eye(n_features)
+          
             
-            
-        # create vector p
-        p = np.zeros((n_features,1))
-        p = np.vstack((p,self.C * np.ones((n_samples,1))))
-        p_ = np.zeros((n_support,1))
+        # create vector q
+        q = np.zeros((paramCount, 1))
+        q[n_features: (n_features + n_samples), 0] = self.C * 1
+        q_ = np.zeros((n_support,1))
         for row in range(n_support):
-            p_[row,0] = self.C * self.sigma(self.support_vectors[row,:],X)
-        p = np.vstack((p,p_))
+            q_[row,0] = self.C * self.sigma(self.support_vectors[row,:],X)
+        q[(n_features + n_samples):, 0] = q_[:, 0]
         
         
         # create the Matrix of SVM contraints
         G = np.zeros((n_samples*2,paramCount))
-        for row in range(n_samples):
-            for col in range(n_features):
-                G[row,col] = -X[row,col] * y[row,0]
-            G[row,n_features+row] = -1
-            G[n_samples+row,n_features+row] = -1
+        G[:n_samples,:n_features] = -np.multiply(X, y)
+        G[:, n_features: (n_features+n_samples)] = - np.vstack((np.eye(n_samples), 
+                np.eye(n_samples)))
         G_ = np.zeros((n_support*2,paramCount))
-        for row in range(n_support):
-            for col in range(n_features):
-                G_[row,col] = -self.support_vectors[row,col] * self.support_vector_labels[row,0]
-            G_[row,n_features+n_samples+row] = -1
-            G_[n_support+row,n_features+n_samples+row] = -1
+        G_[:n_support, :n_features] = -np.multiply(
+                self.support_vectors, self.support_vector_labels)
+        G_[:, (n_features+n_samples):] = - np.vstack((np.eye(n_support), 
+                np.eye(n_support)))
         G = np.vstack((G,G_))
             
         #create vector of h
-        h = np.ones((n_samples,1))
-        h = np.vstack((-h,np.zeros((n_samples,1))))
-        h = np.vstack((h,-np.ones((n_support,1))))
-        h = np.vstack((h,np.zeros((n_support,1))))
+        h = np.zeros(((n_samples+n_support) * 2, 1))
+        h[:n_samples, 0] = -1
+        h[(n_samples*2):(n_samples*2+n_support)] = -1
+        
         
         # convert numpy matrix to cvxopt matrix
-        Q = 2*matrix(Q)
-        p = matrix(p)
+        P = 2*matrix(P)
+        q = matrix(q)
         G = matrix(G)
         h = matrix(h)
         #print Q
@@ -79,7 +74,7 @@ class CDSVM(object):
         #print G
         #print h
         solvers.options['show_progress'] = False
-        sol = solvers.qp(Q,p,G,h)
+        sol = solvers.qp(P,q,G,h)
         
         self.coef_ = sol['x'][0:n_features]
         self.coef_ = np.array(self.coef_).T
