@@ -16,7 +16,7 @@ from sklearn.metrics import accuracy_score
 from cmdline import commandline
 import load_data
 import da_tool.tca
-import da_tool.cdsvm
+from da_tool.cdsvm_cvxpy import CDSVM
 
 # =============================================================================
 # 
@@ -37,7 +37,7 @@ def plot_coef(coef, img_name, maskimg, maskvox, thre_rate = 0.05):
     #plotting.plot_glass_brain(coef_img_file, output_file='%s.svg'%img_name)
     
     plotting.plot_stat_map(coef_img, display_mode='x', threshold = thre,
-                           cut_coords=range(-50, 51, 10), output_file='%s.svg'%img_name)
+                           cut_coords=range(-50, 51, 10), output_file='%s.pdf'%img_name)
     plotting.plot_stat_map(coef_img, display_mode='x', threshold = thre,
                            cut_coords=range(-50, 51, 10), output_file='%s.png'%img_name)
 # =============================================================================
@@ -69,10 +69,10 @@ Xs, ys = load_data.get_domain_data(source, data, label)
 skf = StratifiedKFold(n_splits=config.kfold)
 
 # run tca
-my_tca = da_tool.tca.TCA(dim=50,kerneltype='linear')
-Xtcs, Xtct, tar_o_tca, V, obj, obj_tca = my_tca.fit_transform(Xs, Xt)
-V = V[:, :50]
-W = np.dot(np.vstack((Xs, Xt)).T, V)
+my_tca = da_tool.tca.TCA(n_components=50,kernel='linear')
+Xtcs, Xtct = my_tca.fit_transform(Xs, Xt)
+U = my_tca.U
+W = np.dot(np.vstack((Xs, Xt)).T, U)
 
 # run classification 
 # apply svm to whole brain
@@ -85,7 +85,7 @@ plot_coef(coef_, img_name, maskimg, maskvox)
 
 # tca+cdsvm
 svm.fit(Xtcs, ys)
-cdsvm = da_tool.cdsvm.CDSVM(svm.support_vectors_, ys[svm.support_],C=10, beta=1)
+cdsvm = CDSVM(svm.support_vectors_, ys[svm.support_],C=10, beta=1)
 cdsvm.fit(Xtct, yt)
 coef_ = np.dot(W, cdsvm.coef_.T)[:,0]
 img_name = 'tca+cdsvm%svs%s_%svs%s'%(target[0], target[1], source[0], source[1])
