@@ -1,144 +1,119 @@
-# encoding=utf-8
-"""
-    Created on 14:52 2017/4/30
-    @author: Jindong Wang
-"""
+# =============================================================================
+# @author: Shuo Zhou, The University of Sheffield
+# =============================================================================
 
 import numpy as np
+import scipy.linalg
+import sys
+from sklearn.metrics.pairwise import kernel_metrics
 
+# =============================================================================
+# Transfer Component Analysis: TCA
+# Ref: S. J. Pan, I. W. Tsang, J. T. Kwok and Q. Yang, "Domain Adaptation via 
+# Transfer Component Analysis," in IEEE Transactions on Neural Networks, 
+# vol. 22, no. 2, pp. 199-210, Feb. 2011.
+# =============================================================================
 
 class TCA:
-    dim = 5
-    kerneltype = 'rbf'
-    kernelparam = 1
-    mu = 1
-
-    def __init__(self, dim=5, kerneltype='rbf', kernelparam=1, mu=1):
+    def __init__(self, n_components, kernel='linear', lambda_=1, **kwargs):
         '''
         Init function
-        :param dim: dims after tca (dim <= d)
-        :param kerneltype: 'rbf' | 'linear' | 'poly' (default is 'rbf')
-        :param kernelparam: kernel param
-        :param mu: param
+        Parameters
+            n_components: n_componentss after tca (n_components <= d)
+            kernel_type: 'rbf' | 'linear' | 'poly' (default is 'linear')
+            kernelparam: kernel param
+            lambda_: regulization param
         '''
-        self.dim = dim
-        self.kernelparam = kernelparam
-        self.kerneltype = kerneltype
-        self.mu = mu
+        self.n_components = n_components
+        self.kwargs = kwargs
+        self.kernel = kernel
+        self.lambda_ = lambda_
 
-    def get_L(self, n_src, n_tar):
+    def get_L(self, ns, nt):
         '''
-        Get index matrix
-        :param n_src: num of source domain
-        :param n_tar: num of target domain
-        :return: index matrix L
+        Get kernel weight matrix
+        Parameters:
+            ns: source domain sample size
+            nt: target domain sample size
+        Return: 
+            Kernel weight matrix L
         '''
-        L_ss = (1. / (n_src * n_src)) * np.full((n_src, n_src), 1)
-        L_st = (-1. / (n_src * n_tar)) * np.full((n_src, n_tar), 1)
-        L_ts = (-1. / (n_tar * n_src)) * np.full((n_tar, n_src), 1)
-        L_tt = (1. / (n_tar * n_tar)) * np.full((n_tar, n_tar), 1)
-        L_up = np.hstack((L_ss, L_st))
-        L_down = np.hstack((L_ts, L_tt))
-        L = np.vstack((L_up, L_down))
+        a = 1.0 / (ns * np.ones((ns, 1)))
+        b = -1.0 / (nt * np.ones((nt, 1)))
+        e = np.vstack((a, b))
+        L = np.dot(e, e.T)
         return L
 
-    def get_kernel(self, kerneltype, kernelparam, x1, x2=None):
+    def get_kernel(self, X, Y=None):
         '''
-        Calculate kernel for TCA (inline func)
-        :param kerneltype: 'rbf' | 'linear' | 'poly'
-        :param kernelparam: param
-        :param x1: x1 matrix (n1,d)
-        :param x2: x2 matrix (n2,d)
-        :return: Kernel K
+        Generate kernel matrix
+        Parameters:
+            X: X matrix (n1,d)
+            Y: Y matrix (n2,d)
+        Return: 
+            Kernel matrix K
         '''
-        n1, dim = x1.shape
-        K = None
-        if x2 is not None:
-            n2 = x2.shape[0]
-        if kerneltype == 'linear':
-            if x2 is not None:
-                K = np.dot(x2, x1.T)
-            else:
-                K = np.dot(x1, x1.T)
-        elif kerneltype == 'poly':
-            if x2 is not None:
-                K = np.power(np.dot(x1, x2.T), kernelparam)
-            else:
-                K = np.power(np.dot(x1, x1.T), kernelparam)
-        elif kerneltype == 'rbf':
-            if x2 is not None:
-                sum_x2 = np.sum(np.multiply(x2, x2), axis=1)
-                sum_x2 = sum_x2.reshape((len(sum_x2), 1))
-                K = np.exp(-1 * (
-                    np.tile(np.sum(np.multiply(x1, x1), axis=1).T, (n2, 1)) + np.tile(sum_x2, (1, n1)) - 2 * np.dot(x2,
-                                                                                                                    x1.T)) / (
-                               dim * 2 * kernelparam))
-            else:
-                P = np.sum(np.multiply(x1, x1), axis=1)
-                P = P.reshape((len(P), 1))
-                K = np.exp(
-                    -1 * (np.tile(P.T, (n1, 1)) + np.tile(P, (1, n1)) - 2 * np.dot(x1, x1.T)) / (dim * 2 * kernelparam))
-        # more kernels can be added
-        return K
+        kernel_all = ['linear', 'rbf', 'poly']
+        if self.kernel_type not in kernel_all:
+            sys.exit('Invalid kernel type!')
+        kernel_function = kernel_metrics()[self.kernel_type]
+        return kernel_function(X, Y=Y, **self.kwargs)
+       
 
-    def fit_transform(self, x_src, x_tar, x_tar_o=None):
+    def fit(self, Xs, Xt):
         '''
-        TCA main method. Wrapped from Sinno J. Pan and Qiang Yang's "Domain adaptation via transfer component ayalysis. IEEE TNN 2011"
-        :param x_src: Source domain data feature matrix. Shape is (n_src,d)
-        :param x_tar: Target domain data feature matrix. Shape is (n_tar,d)
-        :param x_tar_o: Out-of-sample target data feature matrix. Shape is (n_tar_o,d)
-        :return: tranformed x_src_tca,x_tar_tca,x_tar_o_tca
+        Parameters:
+            Xs: Source domain data, array-like, shape (n_samples, n_feautres)
+            Xt: Target domain data, array-like, shape (n_samples, n_feautres)
         '''
-        n_src = x_src.shape[0]
-        n_tar = x_tar.shape[0]
-        X = np.vstack((x_src, x_tar))
-        L = self.get_L(n_src, n_tar)
+        ns = Xs.shape[0]
+        nt = Xt.shape[0]
+        n = ns + nt
+        X = np.vstack((Xs, Xt))
+        L = self.get_L(ns, nt)
         L[np.isnan(L)] = 0
-        K = self.get_kernel(self.kerneltype, self.kernelparam, X)
+        K = self.get_kernel(X)
         K[np.isnan(K)] = 0
-        obj = np.trace(np.dot(K,L))
-        if x_tar_o is not None:
-            K_tar_o = self.get_kernel(self.kerneltype, self.kernelparam, X, x_tar_o)
+        #obj = np.trace(np.dot(K,L))
 
-        H = np.identity(n_src + n_tar) - 1. / (n_src + n_tar) * np.ones(shape=(n_src + n_tar, 1)) * np.ones(
-            shape=(n_src + n_tar, 1)).T
-        forPinv = self.mu * np.identity(n_src + n_tar) + np.dot(np.dot(K, L), K)
-        forPinv[np.isnan(forPinv)] = 0
-        Kc = np.dot(np.dot(np.dot(np.linalg.pinv(forPinv), K), H), K)
-        Kc[np.isnan(Kc)] = 0
+        H = np.eye(n) - 1. / n * np.ones((n, n))
         
-
-        D, V = np.linalg.eig(Kc)
-        eig_values = D.reshape(len(D), 1)
-        eig_values_sorted = np.sort(eig_values[::-1], axis=0)
-        index_sorted = np.argsort(-eig_values, axis=0)
-        V = V[:, index_sorted]
-        V = V.reshape((V.shape[0], V.shape[1]))
-        # objective function
-        obj_tca = np.trace(np.dot(np.dot(np.dot(np.dot(V.T,K),L),K),V))
+        obj = np.dot(np.dot(K, L), K.T) + self.lambda_ * np.eye(ns + nt)
+        st = np.dot(np.dot(K, H), K.T)
+        eig_values, eig_vecs = scipy.linalg.eig(obj, st)
         
-        x_src_tca = np.dot(K[:n_src, :], V)
-        x_tar_tca = np.dot(K[n_src:, :], V)
-        if x_tar_o is not None:
-            x_tar_o_tca = np.dot(K_tar_o, V)
-        else:
-            x_tar_o_tca = None
+        ev_abs = np.array(list(map(lambda item: np.abs(item), eig_values)))
+        idx_sorted = np.argsort(ev_abs)[:self.n_components]
 
-        x_src_tca = np.asarray(x_src_tca[:, :self.dim], dtype=np.float64)
-        x_tar_tca = np.asarray(x_tar_tca[:, :self.dim], dtype=np.float64)
-        if x_tar_o is not None:
-            x_tar_o_tca = x_tar_o_tca[:, :self.dim]
-        return x_src_tca, x_tar_tca, x_tar_o_tca, V, obj, obj_tca
+        W = np.zeros((eig_vecs.shape[0], self.n_components))
+        
+        W[:,:] = eig_vecs[:, idx_sorted]
+        W = np.asarray(W, dtype = np.float)
+        self.components_ = np.dot(X.T, W)
+        self.components_ = self.components_.T
+        return self
+        
+    def transform(self, X):
+        '''
+        Parameters:
+            X: array-like, shape (n_samples, n_feautres)
+        Return: 
+            tranformed data
+        '''
+        return np.dot(X, self.components_.T)
+    
+    def fit_transform(self, Xs, Xt):
+        '''
+        Parameters:
+            Xs: Source domain data, array-like, shape (n_samples, n_feautres)
+            Xt: Target domain data, array-like, shape (n_samples, n_feautres)
+        Return: 
+            tranformed Xs_transformed, Xt_transformed
+        '''
+        self.fit(Xs, Xt)
+        
+        Xs_transformed = self.transform(Xs)
+        Xt_transformed = self.transform(Xt)
+        
+        return Xs_transformed, Xt_transformed
 
-
-if __name__ == '__main__':
-    file_path = 'data/test_tca_data.csv'
-    data = np.loadtxt(file_path, delimiter=',')
-    x_src = data[:, :81]
-    x_tar = data[:, 81:]
-
-    # example usage
-    my_tca = TCA(dim=30)
-    x_src_tca, x_tar_tca, x_tar_o_tca = my_tca.fit_transform(x_src, x_tar)
-    np.savetxt('x_src1.csv', x_src_tca, delimiter=',', fmt='%.6f')
-    np.savetxt('x_tar1.csv', x_tar_tca, delimiter=',', fmt='%.6f')
