@@ -19,7 +19,7 @@ OPTIONS:
 
 import sys,os
 import getopt
-import load_data
+from . import load_data 
 
 class commandline:
     def __init__(self):

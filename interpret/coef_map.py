@@ -13,8 +13,8 @@ from nilearn import plotting
 from sklearn.model_selection import StratifiedKFold
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
-from cmdline import commandline
-import load_data
+from utils.cmdline import commandline
+import utils.load_data as load_data
 import da_tool.tca
 from da_tool.cdsvm_cvxpy import CDSVM
 
