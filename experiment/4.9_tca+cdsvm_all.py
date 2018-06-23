@@ -4,13 +4,6 @@ Created on Fri Aug 11 16:47:24 2017
 
 @author: Shuo Zhou, the University of sheffield
 
-USAGE: python <PROGRAM> options
-ACTION: classify the ICA data
-OPTIONS:
-    -b: specify the basedir (contains data labels)
-    -i: specify the directory of ICA data
-    -h: print help
-
 """
 
 from sklearn.svm import SVC
@@ -129,7 +122,7 @@ target_str = pair2str(task_pairs)
 source_str = pair2str(src_pairs)
 
 df = pd.DataFrame(acc_all, index = target_str, columns = source_str)
-df.to_csv("%sfold_transfer_matrix_.csv"%kfold)
+df.to_csv("%sfold_transfer_matrix.csv"%kfold)
 
 auc_df = pd.DataFrame(auc_all, index = target_str, columns = source_str)
-df.to_csv("%sfold_transfer_matrix_auc_.csv"%kfold)
+auc_df.to_csv("%sfold_transfer_matrix_auc.csv"%kfold)
