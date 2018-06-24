@@ -1,3 +1,3 @@
 ### DawfMRI
 
-Submission for NeuroImage 2018
+Code for Domain Adaptation for whole-brain fMRI
