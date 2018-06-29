@@ -14,8 +14,9 @@ Ref: Jiang, W., Zavesky, E., Chang, S.-F., and Loui, A. Cross-domain learning me
 import numpy as np
 from cvxopt import matrix, solvers
 from sklearn.metrics import accuracy_score
+from sklearn.base import BaseEstimator
 
-class CDSVM(object):
+class CDSVM(BaseEstimator):
     def __init__(self,support_vectors, support_vector_labels,C=0.1, beta=0.5):
         self.C = C
         self.beta = beta
@@ -69,10 +70,7 @@ class CDSVM(object):
         q = matrix(q)
         G = matrix(G)
         h = matrix(h)
-        #print Q
-        #print p
-        #print G
-        #print h
+
         solvers.options['show_progress'] = False
         sol = solvers.qp(P,q,G,h)
         
@@ -95,14 +93,10 @@ class CDSVM(object):
         
     def decision_function(self,X):
         decision = np.dot(X,self.coef_.T)
-        #print 'src:',np.dot(X,self.source_w.T)
-        #print 'adaptive:',np.dot(X,self.source_w.T)+np.dot(X,self.coef_)
+
         return decision[:,0]
     
     def score(self,X,y):
         pred = self.predict(X)
         return accuracy_score(pred,y)
     
-    def get_params(self,deep=True):
-        out = '(C='+str(self.C)+', beta='+str(self.beta)+')'
-        return out

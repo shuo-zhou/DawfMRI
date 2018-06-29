@@ -4,8 +4,8 @@
 
 import numpy as np
 import scipy.linalg
-import sys
-from sklearn.metrics.pairwise import kernel_metrics
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.metrics.pairwise import pairwise_kernels
 from sklearn.utils.validation import check_is_fitted
 # =============================================================================
 # Transfer Component Analysis: TCA
@@ -14,7 +14,7 @@ from sklearn.utils.validation import check_is_fitted
 # vol. 22, no. 2, pp. 199-210, Feb. 2011.
 # =============================================================================
 
-class TCA:
+class TCA(BaseEstimator, TransformerMixin):
     def __init__(self, n_components, kernel='linear', lambda_=1, **kwargs):
         '''
         Init function
@@ -51,13 +51,11 @@ class TCA:
             X: X matrix (n1,d)
             Y: Y matrix (n2,d)
         Return: 
-            Kernel matrix K
+            Kernel matrix
         '''
-        kernel_all = ['linear', 'rbf', 'poly']
-        if self.kernel not in kernel_all:
-            sys.exit('Invalid kernel type!')
-        kernel_function = kernel_metrics()[self.kernel]
-        return kernel_function(X, Y=Y, **self.kwargs)
+
+        return pairwise_kernels(X, Y=Y, metric = self.kernel, 
+                                filter_params = True, **self.kwargs)
        
 
     def fit(self, Xs, Xt):
@@ -124,3 +122,4 @@ class TCA:
         Xs_transformed = K_[:self.ns, :]
         Xt_transformed = K_[self.ns:, :]
         return Xs_transformed, Xt_transformed
+    
