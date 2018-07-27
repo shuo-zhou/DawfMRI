@@ -1,3 +1,2 @@
-### DawfMRI
 
-Code for Domain Adaptation for whole-brain fMRI
+Code for domain adaptation framework for whole-brain fMRI
